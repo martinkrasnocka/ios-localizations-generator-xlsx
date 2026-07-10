@@ -94,7 +94,7 @@ class LocsGenerator: NSObject {
                 if (args.platform=="ios") {
                     appendLineToOutputiOS(keyString: keyString, valueString: valueString, defaultOutput: outputString, plistOutputs: plistsOutputStrings, config: config)
                 } else {
-                    appendLineToOutputAndroid(keyString: keyString, valueString: valueString, defaultOutput: outputString, plistOutputs: plistsOutputStrings, config: config)
+                    appendLineToOutputAndroid(keyString: keyString, valueString: valueString, defaultOutput: outputString, plistOutputs: plistsOutputStrings, config: config, disablePlurals: args.disablePlurals)
                 }
             }
             
@@ -119,7 +119,10 @@ class LocsGenerator: NSObject {
         print("Finished in " + String(format: "%.2f", -nowDate.timeIntervalSinceNow) + " seconds.")
     }
     
-    private func appendLineToOutputAndroid(keyString: String, valueString: String, defaultOutput: NSMutableString, plistOutputs: Dictionary<String, Any>, config: NSDictionary?) {
+    private func appendLineToOutputAndroid(keyString: String, valueString: String, defaultOutput: NSMutableString, plistOutputs: Dictionary<String, Any>, config: NSDictionary?, disablePlurals: Bool) {
+        guard shouldEmitStandaloneAndroidString(key: keyString, disablePlurals: disablePlurals) else {
+            return
+        }
         if valueString.count > 0 {
             let line = String(format:"<string name=\"%@\">%@</string>\n", keyString, valueString)
             defaultOutput.append(line)

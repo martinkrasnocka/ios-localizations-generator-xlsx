@@ -10,6 +10,10 @@ import Foundation
 
 let pluralFormatPlaceholder = "plural"
 
+func shouldEmitStandaloneAndroidString(key: String, disablePlurals: Bool) -> Bool {
+    disablePlurals || !key.isPluralKey()
+}
+
 extension String {
     static let pluralSuffixes = ["_zero", "_one", "_two", "_few", "_many", "_other"]
     

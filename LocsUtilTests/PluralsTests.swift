@@ -33,4 +33,15 @@ final class PluralsTests: XCTestCase {
             }
         }
     }
+    
+    func testStandaloneAndroidStringEmissionForPluralKeysWhenPluralsEnabled() {
+        XCTAssertFalse(shouldEmitStandaloneAndroidString(key: "assigned_jobs_one", disablePlurals: false))
+        XCTAssertFalse(shouldEmitStandaloneAndroidString(key: "assigned_jobs_other", disablePlurals: false))
+        XCTAssertTrue(shouldEmitStandaloneAndroidString(key: "assigned_jobs", disablePlurals: false))
+    }
+    
+    func testStandaloneAndroidStringEmissionWhenPluralsDisabled() {
+        XCTAssertTrue(shouldEmitStandaloneAndroidString(key: "assigned_jobs_one", disablePlurals: true))
+        XCTAssertTrue(shouldEmitStandaloneAndroidString(key: "assigned_jobs", disablePlurals: true))
+    }
 }
